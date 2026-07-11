@@ -37,3 +37,4 @@ EXPOSE 3001
 USER node
 
 CMD ["node", "dist/index.js"]
+
