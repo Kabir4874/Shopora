@@ -11,6 +11,7 @@ import { sentryClerkUserMiddleware } from "./middlewares/sentryClerkUser";
 import adminRouter from "./routes/adminRouter";
 import checkoutRouter from "./routes/checkoutRouter";
 import meRouter from "./routes/meRouter";
+import orderRouter from "./routes/orderRouter";
 import productRouter from "./routes/productRouter";
 import streamRouter from "./routes/streamRouter";
 import { clerkWebhookHandler } from "./webhooks/clerk";
@@ -42,6 +43,7 @@ app.use("/api/products", productRouter);
 app.use("/api/stream", streamRouter);
 app.use("/api/checkout", checkoutRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/orders", orderRouter);
 
 const publicDir = path.join(process.cwd(), "public");
 if (fs.existsSync(publicDir)) {
