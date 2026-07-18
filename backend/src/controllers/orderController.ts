@@ -10,7 +10,7 @@ import {
   streamChatDisplayName,
   streamUserId,
 } from "../lib/stream";
-import { getLocalUser } from "../lib/users";
+import { ensureLocalUser } from "../lib/users";
 
 const env = getEnv();
 
@@ -26,7 +26,7 @@ export async function listOrders(
       return;
     }
 
-    const localUser = await getLocalUser(userId);
+    const localUser = await ensureLocalUser(userId);
     if (!localUser) {
       res.status(503).json({ error: "Account not synced yet" });
       return;
@@ -92,7 +92,7 @@ export async function getOrder(
       return;
     }
 
-    const localUser = await getLocalUser(userId);
+    const localUser = await ensureLocalUser(userId);
     if (!localUser) {
       res.status(503).json({ error: "Account not synced yet" });
       return;
@@ -146,7 +146,7 @@ export async function createStreamChannel(
 
     const server = getStreamChatServer(env);
 
-    const localUser = await getLocalUser(userId);
+    const localUser = await ensureLocalUser(userId);
     if (!localUser) {
       res.status(503).json({ error: "Account not synced yet" });
       return;
@@ -221,7 +221,7 @@ export async function createVideoInvite(
 
     const server = getStreamChatServer(env);
 
-    const localUser = await getLocalUser(userId);
+    const localUser = await ensureLocalUser(userId);
     if (!localUser) {
       res.status(503).json({ error: "Account not synced yet" });
       return;

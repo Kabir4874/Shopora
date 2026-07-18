@@ -1,6 +1,6 @@
 import { getAuth } from "@clerk/express";
 import { Router } from "express";
-import { getLocalUser } from "../lib/users";
+import { ensureLocalUser } from "../lib/users";
 
 const router = Router();
 
@@ -12,7 +12,7 @@ router.get("/", async (req, res, next) => {
       return;
     }
 
-    const user = await getLocalUser(userId);
+    const user = await ensureLocalUser(userId);
     res.json({ user });
   } catch (e) {
     next(e);

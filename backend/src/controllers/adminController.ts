@@ -8,7 +8,7 @@ import { orderItems, products } from "../db/schema";
 import { getEnv } from "../lib/env";
 import { deleteImageKitAsset } from "../lib/imagekit";
 import { isAdmin } from "../lib/roles";
-import { getLocalUser } from "../lib/users";
+import { ensureLocalUser } from "../lib/users";
 
 const env = getEnv();
 
@@ -60,7 +60,7 @@ export async function requireAdmin(
       res.status(401).json({ error: "Unauthorized" });
       return;
     }
-    const user = await getLocalUser(userId);
+    const user = await ensureLocalUser(userId);
 
     if (!isAdmin(user.role)) {
       res.status(403).json({ error: "Admin only" });

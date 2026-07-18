@@ -6,7 +6,7 @@ import {
   streamChatDisplayName,
   streamUserId,
 } from "../lib/stream.js";
-import { getLocalUser } from "../lib/users.js";
+import { ensureLocalUser } from "../lib/users.js";
 
 const env = getEnv();
 
@@ -22,7 +22,7 @@ export async function createStreamToken(
       return;
     }
 
-    const localUser = await getLocalUser(userId);
+    const localUser = await ensureLocalUser(userId);
     if (!localUser) {
       res.status(503).json({ error: "Account not synced yet" });
       return;
