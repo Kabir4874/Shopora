@@ -1,4 +1,4 @@
-function buildNorthwindTextLayer({ w, h }) {
+function buildShoporaTextLayer({ w, h }) {
   const maxDim = Math.max(
     w != null && w > 0 ? w : 0,
     h != null && h > 0 ? h : 0,
@@ -10,7 +10,7 @@ function buildNorthwindTextLayer({ w, h }) {
   else if (maxDim <= 400) fs = 16;
   else if (maxDim <= 700) fs = 22;
   else fs = 30;
-  return `l-text,i-Northwind,fs-${fs},co-FFFFFF,bg-0F172A90,pa-8_12,lx-N14,ly-14,lap-top_right,l-end`;
+  return `l-text,i-Shopora,fs-${fs},co-FFFFFF,bg-0F172A90,pa-8_12,lx-N14,ly-14,lap-top_right,l-end`;
 }
 
 function buildTrSegment({ w, h, q = 80, f = "auto", crop, watermark = false }) {
@@ -26,7 +26,7 @@ function buildTrSegment({ w, h, q = 80, f = "auto", crop, watermark = false }) {
   parts.push(`f-${f}`);
   const base = `tr:${parts.join(",")}`;
   if (!watermark) return base;
-  return `${base}:${buildNorthwindTextLayer({ w, h })}`;
+  return `${base}:${buildShoporaTextLayer({ w, h })}`;
 }
 
 function isImageKitDeliveryUrl(url) {

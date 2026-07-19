@@ -6,7 +6,7 @@ import { db } from "../db";
 import { CheckoutSessionLine, checkoutSessions, products } from "../db/schema";
 import { getEnv } from "../lib/env";
 import { polarCreateCheckout } from "../lib/polar";
-import { getLocalUser } from "../lib/users";
+import { ensureLocalUser } from "../lib/users";
 
 const env = getEnv();
 
@@ -44,7 +44,7 @@ export async function createCheckout(
       return;
     }
 
-    const localUser = await getLocalUser(userId);
+    const localUser = await ensureLocalUser(userId);
     if (!localUser) {
       res.status(503).json({ error: "Account not synced yet" });
       return;

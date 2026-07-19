@@ -1,16 +1,56 @@
 import { useAuth } from "@clerk/react";
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import Layout from "./components/Layout";
 import PageLoader from "./components/PageLoader";
-import HomePage from "./pages/Homepage";
+import AdminProductsPage from "./pages/AdminProductsPage";
+import CartPage from "./pages/CartPage";
+import CheckoutReturnPage from "./pages/CheckoutReturnPage";
+import HomePage from "./pages/HomePage";
+import OrderChatPage from "./pages/OrderChatPage";
+import OrderDetailPage from "./pages/OrderDetailPage";
+import OrdersPage from "./pages/OrdersPage";
+import OrderSummaryPage from "./pages/OrderSummaryPage";
+import OrderVideoPage from "./pages/OrderVideoPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
+import { SentryDemoPage } from "./pages/SentryDemoPage";
 
 function App() {
-  const { isLoaded } = useAuth();
+  const { isLoaded, isSignedIn } = useAuth();
+
   if (!isLoaded) return <PageLoader />;
+
   return (
     <Layout>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/product/:slug" element={<ProductDetailPage />} />
+        <Route
+          path="/orders"
+          element={isSignedIn ? <OrdersPage /> : <Navigate to={"/"} replace />}
+        />
+        <Route path="/checkout/return" element={<CheckoutReturnPage />} />
+
+        <Route path="/demo-sentry" element={<SentryDemoPage />} />
+
+        <Route
+          path="/orders/:id/call"
+          element={
+            isSignedIn ? <OrderVideoPage /> : <Navigate to={"/"} replace />
+          }
+        />
+
+        <Route
+          path="/admin"
+          element={
+            isSignedIn ? <AdminProductsPage /> : <Navigate to="/" replace />
+          }
+        />
+
+        <Route path="/orders/:id" element={<OrderDetailPage />}>
+          <Route index element={<OrderSummaryPage />} />
+          <Route path="chat" element={<OrderChatPage />} />
+        </Route>
       </Routes>
     </Layout>
   );
